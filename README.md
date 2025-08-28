@@ -1,42 +1,65 @@
-# KTP Validator Android (On‑Device)
+# 📱 KTP Validator – Mobile Version
 
-A minimal Android app (Kotlin) which captures or selects a photo of an Indonesian ID (KTP) and runs **on-device analysis** to estimate document type and text legibility metrics (sharpness, edge density, RMS contrast, etc.), producing a **Final Score** 0–100.
-
-This version implements the core heuristics of your Python `ktp_validator.py` directly in Kotlin without external native libraries, so it is easy to build and privacy-friendly (no server upload).
-
-## Build
-
-- Open **Android Studio** (Giraffe+ recommended).
-- `File → Open…` and select the folder `KTPValidatorAndroid`.
-- Let Gradle sync. Run on a device (minSdk 24).
-
-## Use
-
-- Tap **Take Photo** (camera) or **Pick from Gallery**.
-- The app shows the image and computed metrics & score.
-
-## Tuning
-
-Open `ImageAnalyzer.kt`:
-- `satThreshold`: what counts as "colored" saturation in HSV.
-- `edgeThreshold`: Sobel magnitude threshold for edges.
-- `Weights`: change feature weights and `photocopyPenalty` to mirror your Python model.
-- `normalize()` bands: tighten/loosen min–max ranges to fit your dataset.
-
-## Notes
-
-- Implemented metrics: colored fraction, variance-of-Laplacian sharpness, Sobel edge density, RMS contrast, and a heuristic text density.
-- If you prefer the **exact** Python pipeline (e.g., MSER text density, OCR), you can later **integrate OpenCV** or Tesseract via Android deps, or embed Python using Chaquopy. Start simple with this app, confirm UX and thresholds, then iterate.
-
-## Package
-
-- App ID: `com.vandemonium.ktpvalidator`.
-- Main files:
-  - `app/src/main/java/.../MainActivity.kt`
-  - `app/src/main/java/.../ImageAnalyzer.kt`
-  - `app/src/main/res/layout/activity_main.xml`
-  - `app/src/main/AndroidManifest.xml`
+Mobile application for **KTP validation and scoring**, built to complement the [KTP Validator backend](https://github.com/oktorio/ktp_validator).  
+This version allows users to **capture or upload ID card images**, process them with AI models, and display a **Final Score (0–100)** for quality and authenticity.
 
 ---
 
-© Vandemonium / Oktorio. For internal testing only.
+## ✨ Features
+- 📷 Capture photo directly from camera or choose from gallery  
+- 📝 Validate if the uploaded file is a KTP (not another document)  
+- 🎨 Detect document type:  
+  - `color_document` (KTP warna)  
+  - `grayscale_document`  
+  - `photocopy_on_colored_background`  
+  - Hard reject: `black` or `white` images  
+- 🔍 Text legibility analysis (sharpness, contrast, OCR confidence, censor/blur detection)  
+- 📊 Final Score (0–100) with status label (`good`, `fair`, `poor`)  
+
+---
+
+## 🏗️ Tech Stack
+- **Frontend / Mobile:** (fill in: React Native / Flutter / Kotlin / Swift — whichever you use)  
+- **Backend:** Python (Flask) [KTP Validator API](https://github.com/oktorio/ktp_validator)  
+- **Libraries:** (list main libraries: OpenCV, Tesseract, TensorFlow Lite, etc.)  
+
+---
+
+## 🚀 Installation & Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/oktorio/ktp_validator_mobile.git
+cd ktp_validator_mobile
+```
+
+### 2. Install Dependencies
+```bash
+# Example for React Native (adjust to your framework)
+npm install
+```
+
+### 3. Run the App
+```bash
+# Android
+npx react-native run-android
+
+# iOS
+npx react-native run-ios
+```
+
+---
+
+## 📷 Screenshots
+(Will be updated soon) 
+
+---
+
+## 🔗 Related Projects
+- [Backend – KTP Validator (Python)](https://github.com/oktorio/ktp_validator)  
+
+---
+
+## 📜 License
+MIT License – feel free to use and modify.  
+
