@@ -1,182 +1,174 @@
-
 package com.vandemonium.ktpvalidator
 
-import android.Manifest
-import android.app.Activity
 import android.content.ContentValues
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Toast
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import com.vandemonium.ktpvalidator.databinding.ActivityMainBinding
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import androidx.lifecycle.lifecycleScope
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private var photoUri: Uri? = null
+    // Views (match your XML)
+    private lateinit var btnCamera: Button
+    private lateinit var btnGallery: Button
+    private lateinit var imageView: ImageView
+    private lateinit var tvResult: TextView
 
-    private val requestCameraPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) openCamera() else toast("Camera permission denied")
-    }
+    private val analyzer = ImageAnalyzer()
+    private var pendingCameraUri: Uri? = null
 
-    private val takePictureLauncher = registerForActivityResult(
-        ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success && photoUri != null) {
-            val bmp = loadBitmapFromUri(photoUri!!)
-            bmp?.let { analyzeAndShow(it) } ?: toast("Failed to load image")
-        } else {
-            toast("No photo captured")
-        }
-    }
-
+    // Pick from gallery
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        if (uri != null) {
-            val bmp = loadBitmapFromUri(uri)
-            bmp?.let { analyzeAndShow(it) } ?: toast("Failed to load image")
+        uri?.let { handleImageUri(it) }
+    }
+
+    // Take photo (full-res) to a MediaStore Uri
+    private val takePictureLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { success: Boolean ->
+        val savedUri = pendingCameraUri // copy to local to avoid smart-cast error
+        pendingCameraUri = null
+        if (success && savedUri != null) {
+            handleImageUri(savedUri)
+        } else {
+            tvResult.text = "Camera cancelled or failed."
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        binding.btnCamera.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED) {
-                openCamera()
-            } else {
-                requestCameraPermission.launch(Manifest.permission.CAMERA)
+        // wire up IDs
+        btnCamera = findViewById(R.id.btnCamera)
+        btnGallery = findViewById(R.id.btnGallery)
+        imageView = findViewById(R.id.imageView)
+        tvResult = findViewById(R.id.tvResult)
+
+        // optional warm-up to trigger ML Kit model download on first run
+        warmUpOcrOnce()
+
+        btnGallery.setOnClickListener {
+            pickImageLauncher.launch("image/*")
+        }
+
+        btnCamera.setOnClickListener {
+            pendingCameraUri = createImageUri()
+            val uri = pendingCameraUri
+            if (uri != null) takePictureLauncher.launch(uri)
+            else tvResult.text = "Failed to create camera URI."
+        }
+    }
+
+    private fun handleImageUri(uri: Uri) {
+        // Decode bitmap and analyze off the UI thread
+        lifecycleScope.launch(Dispatchers.Default) {
+            val bm = loadBitmapFromUri(uri)
+            if (bm == null) {
+                withContext(Dispatchers.Main) {
+                    tvResult.text = "Failed to load image."
+                }
+                return@launch
+            }
+            withContext(Dispatchers.Main) {
+                imageView.setImageBitmap(bm)
+            }
+            analyzeAndShow(bm)
+        }
+    }
+
+    private fun analyzeAndShow(bitmap: Bitmap) {
+        lifecycleScope.launch(Dispatchers.Default) {
+            val result = analyzer.analyze(bitmap) // heavy work off main thread
+            withContext(Dispatchers.Main) {
+                renderResult(result)
             }
         }
-
-        binding.btnGallery.setOnClickListener {
-            val mime = if (Build.VERSION.SDK_INT >= 33) "image/*" else "image/*"
-            pickImageLauncher.launch(mime)
-        }
     }
 
-    private fun openCamera() {
-        try {
-            val imageFile = createImageFile()
-            val uri = FileProvider.getUriForFile(
-                this,
-                "${applicationContext.packageName}.fileprovider",
-                imageFile
-            )
-            photoUri = uri
-            takePictureLauncher.launch(uri)
-        } catch (e: IOException) {
-            e.printStackTrace()
-            toast("Failed to open camera")
+    private fun renderResult(a: AnalysisResult) {
+        val sb = StringBuilder()
+        sb.appendLine("Final Score: %.1f (%s)".format(a.finalScore, a.label))
+        sb.appendLine()
+        sb.appendLine("Document Type: ${a.docLabel}")
+        sb.appendLine("— colored_fraction: %.3f".format(a.coloredFraction))
+        sb.appendLine()
+        sb.appendLine("Text Legibility")
+        sb.appendLine("— sharpness_vlap: %.1f".format(a.sharpnessVlap))
+        sb.appendLine("— edge_density: %.4f".format(a.edgeDensity))
+        sb.appendLine("— rms_contrast: %.4f".format(a.rmsContrast))
+        sb.appendLine("— text_density (approx): %.4f".format(a.textDensity))
+        sb.appendLine()
+        sb.appendLine("Censor/Occlusion")
+        sb.appendLine("— censor_area_frac: %.4f".format(a.censorAreaFrac))
+        sb.appendLine("— occlusion_frac: %.4f".format(a.occlusionFrac))
+        sb.appendLine()
+        sb.appendLine("OCR")
+        sb.appendLine("— outcome: ${a.ocrOutcome}")
+        sb.appendLine("— has_keywords: ${a.ocrHasKeywords}")
+        sb.appendLine("— text_chars: ${a.ocrTextChars}")
+        if (a.ocrSample.isNotBlank()) {
+            sb.appendLine("— sample: ${a.ocrSample.replace('\n',' ').take(200)}")
         }
+        tvResult.text = sb.toString()
     }
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val storageDir: File = cacheDir
-        val imagesDir = File(storageDir, "images")
-        if (!imagesDir.exists()) imagesDir.mkdirs()
-        return File.createTempFile("JPEG_${timeStamp}_", ".jpg", imagesDir)
+    // ---------- helpers ----------
+
+    private fun createImageUri(): Uri? {
+        val cv = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "ktp_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        }
+        return contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv
+        )
     }
 
     private fun loadBitmapFromUri(uri: Uri): Bitmap? {
-        val maxDim = 2000 // avoid huge bitmaps; analyzer downsamples further
-
         return try {
             if (Build.VERSION.SDK_INT >= 28) {
                 val src = ImageDecoder.createSource(contentResolver, uri)
-                val bmp = ImageDecoder.decodeBitmap(src) { decoder, info, _ ->
-                    decoder.isMutableRequired = true
-                    decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE // <-- force software
-                    // downsample large images to reduce memory
-                    val w = info.size.width
-                    val h = info.size.height
-                    val larger = maxOf(w, h)
-                    val sample = if (larger > maxDim) {
-                        // integer power-of-two-ish sample
-                        (larger / maxDim).coerceAtLeast(1)
-                    } else 1
-                    decoder.setTargetSampleSize(sample)
+                ImageDecoder.decodeBitmap(src) { decoder, _, _ ->
+                    // IMPORTANT: force software so we can call getPixels()
+                    decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+                    decoder.isMutableRequired = false
                 }
-                if (bmp.config != Bitmap.Config.ARGB_8888 || !bmp.isMutable) {
-                    bmp.copy(Bitmap.Config.ARGB_8888, /*mutable=*/true)
-                } else bmp
             } else {
-                // API < 28
-                val opts = android.graphics.BitmapFactory.Options().apply {
-                    inPreferredConfig = Bitmap.Config.ARGB_8888
-                    inMutable = true
-                    inJustDecodeBounds = true
-                }
-                contentResolver.openInputStream(uri)?.use { ins ->
-                    android.graphics.BitmapFactory.decodeStream(ins, null, opts)
-                }
-                val larger = maxOf(opts.outWidth, opts.outHeight)
-                val inSample = if (larger > maxDim) (larger / maxDim).coerceAtLeast(1) else 1
-
-                val opts2 = android.graphics.BitmapFactory.Options().apply {
-                    inPreferredConfig = Bitmap.Config.ARGB_8888
-                    inMutable = true
-                    inSampleSize = inSample
-                }
-                contentResolver.openInputStream(uri)?.use { ins ->
-                    android.graphics.BitmapFactory.decodeStream(ins, null, opts2)
-                }
+                @Suppress("DEPRECATION")
+                MediaStore.Images.Media.getBitmap(contentResolver, uri)
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Throwable) {
             null
         }
     }
 
 
-    private fun analyzeAndShow(bitmap: Bitmap) {
-        binding.imageView.setImageBitmap(bitmap)
-
-        val analyzer = ImageAnalyzer()
-        val result = analyzer.analyze(bitmap)
-
-        val sb = StringBuilder()
-        sb.appendLine("Final Score: ${"%.1f".format(result.finalScore)} (${result.label})")
-        sb.appendLine()
-        sb.appendLine("Document Type: ${result.docLabel}")
-        sb.appendLine("— colored_fraction: ${"%.3f".format(result.coloredFraction)}")
-        sb.appendLine()
-        sb.appendLine("Text Legibility")
-        sb.appendLine("— sharpness_vlap: ${"%.1f".format(result.sharpnessVlap)}")
-        sb.appendLine("— edge_density: ${"%.4f".format(result.edgeDensity)}")
-        sb.appendLine("— rms_contrast: ${"%.4f".format(result.rmsContrast)}")
-        sb.appendLine("— text_density (approx): ${"%.4f".format(result.textDensity)}")
-        sb.appendLine()
-        sb.appendLine("Censor/Occlusion")
-        sb.appendLine("— censor_area_frac: ${"%.4f".format(result.censorAreaFrac)}")
-        sb.appendLine("— occlusion_frac: ${"%.4f".format(result.occlusionFrac)}")
-
-        binding.tvResult.text = sb.toString()
-    }
-
-    private fun toast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    private fun warmUpOcrOnce() {
+        try {
+            val tiny = Bitmap.createBitmap(32, 32, Bitmap.Config.ARGB_8888)
+            val image = com.google.mlkit.vision.common.InputImage.fromBitmap(tiny, 0)
+            val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+            recognizer.process(image)
+                .addOnSuccessListener { android.util.Log.d("OCR", "Warm-up success") }
+                .addOnFailureListener { e ->
+                    android.util.Log.w("OCR", "Warm-up failed: ${e.message}")
+                }
+        } catch (_: Throwable) { }
     }
 }

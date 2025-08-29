@@ -9,23 +9,23 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.CAMERA" />
-11-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:5:5-65
-11-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:5:22-62
+11-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:5:5-65
+11-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:5:22-62
 12    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-12-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:6:5-76
-12-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:6:22-73
+12-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:6:5-76
+12-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:6:22-73
 13    <uses-permission
-13-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:7:5-106
+13-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:7:5-106
 14        android:name="android.permission.READ_EXTERNAL_STORAGE"
-14-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:7:22-77
+14-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:7:22-77
 15        android:maxSdkVersion="32" />
-15-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:7:78-104
+15-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:7:78-104
 16    <uses-permission
-16-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:8:5-107
+16-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:8:5-107
 17        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-17-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:8:22-78
+17-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:8:22-78
 18        android:maxSdkVersion="28" />
-18-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:8:79-105
+18-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:8:79-105
 19
 20    <permission
 20-->[androidx.core:core:1.13.1] C:\Users\oktor\.gradle\caches\8.12\transforms\21da1ddbfc33ac73cb0b1bbc355d89f3\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
@@ -34,133 +34,225 @@
 22        android:protectionLevel="signature" />
 22-->[androidx.core:core:1.13.1] C:\Users\oktor\.gradle\caches\8.12\transforms\21da1ddbfc33ac73cb0b1bbc355d89f3\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
 23
-24    <uses-permission android:name="com.vandemonium.ktpvalidator.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+24    <uses-permission android:name="com.vandemonium.ktpvalidator.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
 24-->[androidx.core:core:1.13.1] C:\Users\oktor\.gradle\caches\8.12\transforms\21da1ddbfc33ac73cb0b1bbc355d89f3\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
 24-->[androidx.core:core:1.13.1] C:\Users\oktor\.gradle\caches\8.12\transforms\21da1ddbfc33ac73cb0b1bbc355d89f3\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
-25
-26    <application
-26-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:10:5-36:19
-27        android:allowBackup="true"
-27-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:11:9-35
-28        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-28-->[androidx.core:core:1.13.1] C:\Users\oktor\.gradle\caches\8.12\transforms\21da1ddbfc33ac73cb0b1bbc355d89f3\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
-29        android:dataExtractionRules="@xml/data_extraction_rules"
-29-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:12:9-65
-30        android:debuggable="true"
-31        android:extractNativeLibs="false"
-32        android:fullBackupContent="@xml/backup_rules"
-32-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:13:9-54
-33        android:icon="@mipmap/ic_launcher"
-33-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:14:9-43
-34        android:label="@string/app_name"
-34-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:15:9-41
-35        android:roundIcon="@mipmap/ic_launcher_round"
-35-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:16:9-54
-36        android:supportsRtl="true"
-36-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:17:9-35
-37        android:testOnly="true"
-38        android:theme="@style/Theme.KTPValidatorAndroid" >
-38-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:18:9-57
-39        <provider
-40            android:name="androidx.core.content.FileProvider"
-40-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:20:13-62
-41            android:authorities="com.vandemonium.ktpvalidator.fileprovider"
-41-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:21:13-64
-42            android:exported="false"
-42-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:22:13-37
-43            android:grantUriPermissions="true" >
-43-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:23:13-47
-44            <meta-data
-44-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:24:13-26:54
-45                android:name="android.support.FILE_PROVIDER_PATHS"
-45-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:25:17-67
-46                android:resource="@xml/file_paths" />
-46-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:26:17-51
-47        </provider>
-48
-49        <activity
-49-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:29:9-35:20
-50            android:name="com.vandemonium.ktpvalidator.MainActivity"
-50-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:29:19-47
-51            android:exported="true" >
-51-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:30:13-36
-52            <intent-filter>
-52-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:31:13-34:29
-53                <action android:name="android.intent.action.MAIN" />
-53-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:32:17-69
-53-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:32:25-66
-54
-55                <category android:name="android.intent.category.LAUNCHER" />
-55-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:33:17-77
-55-->D:\vandemonium\dev\KTPValidatorAndroid\app\src\main\AndroidManifest.xml:33:27-74
-56            </intent-filter>
-57        </activity>
-58
-59        <provider
-59-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
-60            android:name="androidx.startup.InitializationProvider"
-60-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:25:13-67
-61            android:authorities="com.vandemonium.ktpvalidator.androidx-startup"
-61-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:26:13-68
-62            android:exported="false" >
-62-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:27:13-37
-63            <meta-data
-63-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
-64                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-64-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
-65                android:value="androidx.startup" />
-65-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
+25    <!-- <uses-sdk android:minSdkVersion="14"/> -->
+26    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+26-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:25:5-79
+26-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:25:22-76
+27    <uses-permission android:name="android.permission.INTERNET" />
+27-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:26:5-67
+27-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:26:22-64
+28
+29    <application
+29-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:10:5-36:19
+30        android:allowBackup="true"
+30-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:11:9-35
+31        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+31-->[androidx.core:core:1.13.1] C:\Users\oktor\.gradle\caches\8.12\transforms\21da1ddbfc33ac73cb0b1bbc355d89f3\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+32        android:dataExtractionRules="@xml/data_extraction_rules"
+32-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:12:9-65
+33        android:debuggable="true"
+34        android:extractNativeLibs="false"
+35        android:fullBackupContent="@xml/backup_rules"
+35-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:13:9-54
+36        android:icon="@mipmap/ic_launcher"
+36-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:14:9-43
+37        android:label="@string/app_name"
+37-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:15:9-41
+38        android:roundIcon="@mipmap/ic_launcher_round"
+38-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:16:9-54
+39        android:supportsRtl="true"
+39-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:17:9-35
+40        android:testOnly="true"
+41        android:theme="@style/Theme.KTPValidatorAndroid" >
+41-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:18:9-57
+42        <provider
+43            android:name="androidx.core.content.FileProvider"
+43-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:20:13-62
+44            android:authorities="com.vandemonium.ktpvalidator.fileprovider"
+44-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:21:13-64
+45            android:exported="false"
+45-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:22:13-37
+46            android:grantUriPermissions="true" >
+46-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:23:13-47
+47            <meta-data
+47-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:24:13-26:54
+48                android:name="android.support.FILE_PROVIDER_PATHS"
+48-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:25:17-67
+49                android:resource="@xml/file_paths" />
+49-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:26:17-51
+50        </provider>
+51
+52        <activity
+52-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:29:9-35:20
+53            android:name="com.vandemonium.ktpvalidator.MainActivity"
+53-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:29:19-47
+54            android:exported="true" >
+54-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:30:13-36
+55            <intent-filter>
+55-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:31:13-34:29
+56                <action android:name="android.intent.action.MAIN" />
+56-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:32:17-69
+56-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:32:25-66
+57
+58                <category android:name="android.intent.category.LAUNCHER" />
+58-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:33:17-77
+58-->D:\vandemonium\dev\KTPValidatorAndroid\ktp_validator_mobile\app\src\main\AndroidManifest.xml:33:27-74
+59            </intent-filter>
+60        </activity>
+61
+62        <service
+62-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\oktor\.gradle\caches\8.12\transforms\6f9a33a2295704b92d4afeadf48ab491\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:9:9-15:19
+63            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+63-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\oktor\.gradle\caches\8.12\transforms\6f9a33a2295704b92d4afeadf48ab491\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:10:13-91
+64            android:directBootAware="true"
+64-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:17:13-43
+65            android:exported="false" >
+65-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\oktor\.gradle\caches\8.12\transforms\6f9a33a2295704b92d4afeadf48ab491\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:11:13-37
 66            <meta-data
-66-->[androidx.lifecycle:lifecycle-process:2.8.5] C:\Users\oktor\.gradle\caches\8.12\transforms\7b821da99f20ca98942792bca7b94d7c\transformed\jetified-lifecycle-process-2.8.5\AndroidManifest.xml:29:13-31:52
-67                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-67-->[androidx.lifecycle:lifecycle-process:2.8.5] C:\Users\oktor\.gradle\caches\8.12\transforms\7b821da99f20ca98942792bca7b94d7c\transformed\jetified-lifecycle-process-2.8.5\AndroidManifest.xml:30:17-78
-68                android:value="androidx.startup" />
-68-->[androidx.lifecycle:lifecycle-process:2.8.5] C:\Users\oktor\.gradle\caches\8.12\transforms\7b821da99f20ca98942792bca7b94d7c\transformed\jetified-lifecycle-process-2.8.5\AndroidManifest.xml:31:17-49
+66-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\oktor\.gradle\caches\8.12\transforms\6f9a33a2295704b92d4afeadf48ab491\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:12:13-14:85
+67                android:name="com.google.firebase.components:com.google.mlkit.vision.text.internal.TextRegistrar"
+67-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\oktor\.gradle\caches\8.12\transforms\6f9a33a2295704b92d4afeadf48ab491\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:13:17-114
+68                android:value="com.google.firebase.components.ComponentRegistrar" />
+68-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\oktor\.gradle\caches\8.12\transforms\6f9a33a2295704b92d4afeadf48ab491\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:14:17-82
 69            <meta-data
-69-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-70                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-70-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-71                android:value="androidx.startup" />
-71-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-72        </provider>
-73
-74        <receiver
-74-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
-75            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-75-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
-76            android:directBootAware="false"
-76-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
-77            android:enabled="true"
-77-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
-78            android:exported="true"
-78-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
-79            android:permission="android.permission.DUMP" >
-79-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
-80            <intent-filter>
-80-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
-81                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-81-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-81-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
-82            </intent-filter>
-83            <intent-filter>
-83-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
-84                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-84-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-84-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
-85            </intent-filter>
-86            <intent-filter>
-86-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
-87                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-87-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-87-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
-88            </intent-filter>
-89            <intent-filter>
-89-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
-90                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-90-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-90-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
-91            </intent-filter>
-92        </receiver>
-93    </application>
-94
-95</manifest>
+69-->[com.google.mlkit:vision-common:17.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\ffda087335a73b70d4cf1f81190906b5\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:12:13-14:85
+70                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+70-->[com.google.mlkit:vision-common:17.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\ffda087335a73b70d4cf1f81190906b5\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:13:17-124
+71                android:value="com.google.firebase.components.ComponentRegistrar" />
+71-->[com.google.mlkit:vision-common:17.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\ffda087335a73b70d4cf1f81190906b5\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:14:17-82
+72            <meta-data
+72-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:20:13-22:85
+73                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+73-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:21:17-120
+74                android:value="com.google.firebase.components.ComponentRegistrar" />
+74-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:22:17-82
+75        </service>
+76
+77        <provider
+77-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:9:9-13:38
+78            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+78-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:10:13-78
+79            android:authorities="com.vandemonium.ktpvalidator.mlkitinitprovider"
+79-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:11:13-69
+80            android:exported="false"
+80-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:12:13-37
+81            android:initOrder="99" />
+81-->[com.google.mlkit:common:18.8.0] C:\Users\oktor\.gradle\caches\8.12\transforms\a15d33c5a5ae5b0ed9de2064d28907e7\transformed\jetified-common-18.8.0\AndroidManifest.xml:13:13-35
+82
+83        <activity
+83-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\oktor\.gradle\caches\8.12\transforms\5ca4f31d46e6d35fb746aaffc8205b04\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+84            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+84-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\oktor\.gradle\caches\8.12\transforms\5ca4f31d46e6d35fb746aaffc8205b04\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+85            android:exported="false"
+85-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\oktor\.gradle\caches\8.12\transforms\5ca4f31d46e6d35fb746aaffc8205b04\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+86            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+86-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\oktor\.gradle\caches\8.12\transforms\5ca4f31d46e6d35fb746aaffc8205b04\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+87
+88        <meta-data
+88-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\oktor\.gradle\caches\8.12\transforms\c3fa64021ea59dc2a6515d0599f01b26\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+89            android:name="com.google.android.gms.version"
+89-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\oktor\.gradle\caches\8.12\transforms\c3fa64021ea59dc2a6515d0599f01b26\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+90            android:value="@integer/google_play_services_version" />
+90-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\oktor\.gradle\caches\8.12\transforms\c3fa64021ea59dc2a6515d0599f01b26\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+91
+92        <provider
+92-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+93            android:name="androidx.startup.InitializationProvider"
+93-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:25:13-67
+94            android:authorities="com.vandemonium.ktpvalidator.androidx-startup"
+94-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:26:13-68
+95            android:exported="false" >
+95-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:27:13-37
+96            <meta-data
+96-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+97                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+97-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
+98                android:value="androidx.startup" />
+98-->[androidx.emoji2:emoji2:1.3.0] C:\Users\oktor\.gradle\caches\8.12\transforms\dfcbf2ae54e5258c23058f541280b1af\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
+99            <meta-data
+99-->[androidx.lifecycle:lifecycle-process:2.8.5] C:\Users\oktor\.gradle\caches\8.12\transforms\7b821da99f20ca98942792bca7b94d7c\transformed\jetified-lifecycle-process-2.8.5\AndroidManifest.xml:29:13-31:52
+100                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+100-->[androidx.lifecycle:lifecycle-process:2.8.5] C:\Users\oktor\.gradle\caches\8.12\transforms\7b821da99f20ca98942792bca7b94d7c\transformed\jetified-lifecycle-process-2.8.5\AndroidManifest.xml:30:17-78
+101                android:value="androidx.startup" />
+101-->[androidx.lifecycle:lifecycle-process:2.8.5] C:\Users\oktor\.gradle\caches\8.12\transforms\7b821da99f20ca98942792bca7b94d7c\transformed\jetified-lifecycle-process-2.8.5\AndroidManifest.xml:31:17-49
+102            <meta-data
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+103                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+104                android:value="androidx.startup" />
+104-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+105        </provider>
+106
+107        <receiver
+107-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+108            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+109            android:directBootAware="false"
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+110            android:enabled="true"
+110-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+111            android:exported="true"
+111-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+112            android:permission="android.permission.DUMP" >
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+113            <intent-filter>
+113-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+114                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+115            </intent-filter>
+116            <intent-filter>
+116-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+117                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+118            </intent-filter>
+119            <intent-filter>
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+120                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+121            </intent-filter>
+122            <intent-filter>
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+123                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\oktor\.gradle\caches\8.12\transforms\83956f5b513d5b8f89e864adc0f7d947\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+124            </intent-filter>
+125        </receiver>
+126
+127        <service
+127-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:29:9-35:19
+128            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+128-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:30:13-103
+129            android:exported="false" >
+129-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:31:13-37
+130            <meta-data
+130-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:32:13-34:39
+131                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+131-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:33:17-94
+132                android:value="cct" />
+132-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\oktor\.gradle\caches\8.12\transforms\e225106c7a96cb5479deb96d62f0406a\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:34:17-36
+133        </service>
+134        <service
+134-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\oktor\.gradle\caches\8.12\transforms\7f76a4cc21f1ae3455eaad0a0ccb766b\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:26:9-30:19
+135            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+135-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\oktor\.gradle\caches\8.12\transforms\7f76a4cc21f1ae3455eaad0a0ccb766b\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:27:13-117
+136            android:exported="false"
+136-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\oktor\.gradle\caches\8.12\transforms\7f76a4cc21f1ae3455eaad0a0ccb766b\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:28:13-37
+137            android:permission="android.permission.BIND_JOB_SERVICE" >
+137-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\oktor\.gradle\caches\8.12\transforms\7f76a4cc21f1ae3455eaad0a0ccb766b\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:29:13-69
+138        </service>
+139
+140        <receiver
+140-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\oktor\.gradle\caches\8.12\transforms\7f76a4cc21f1ae3455eaad0a0ccb766b\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:32:9-34:40
+141            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+141-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\oktor\.gradle\caches\8.12\transforms\7f76a4cc21f1ae3455eaad0a0ccb766b\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:33:13-132
+142            android:exported="false" />
+142-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\oktor\.gradle\caches\8.12\transforms\7f76a4cc21f1ae3455eaad0a0ccb766b\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:34:13-37
+143    </application>
+144
+145</manifest>

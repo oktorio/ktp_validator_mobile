@@ -2,6 +2,12 @@ package com.vandemonium.ktpvalidator
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import com.google.android.gms.tasks.Tasks
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.google.mlkit.common.MlKitException
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.ln
 import kotlin.math.max
@@ -9,6 +15,7 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+// ---------- Result container ----------
 data class AnalysisResult(
     val finalScore: Double,
     val label: String,
@@ -20,8 +27,14 @@ data class AnalysisResult(
     val textDensity: Double,
     val censorAreaFrac: Double,
     val occlusionFrac: Double,
+    // OCR diagnostics
+    val ocrOutcome: String,
+    val ocrHasKeywords: Boolean,
+    val ocrTextChars: Int,
+    val ocrSample: String,
 )
 
+// ---------- Analyzer ----------
 class ImageAnalyzer {
 
     // -------- KTP VALIDATION --------
@@ -37,20 +50,20 @@ class ImageAnalyzer {
     private val satThreshold = 0.18
     private val edgeThreshold = 20.0
 
-    // -------- WEIGHTS (lenient, text/contrast-forward) --------
+    // -------- WEIGHTS --------
     private val wColorDoc = 0.10
     private val wSharpness = 0.12
     private val wEdge = 0.18
     private val wContrast = 0.28
     private val wTextDensity = 0.32
 
-    // -------- PENALTIES (STRONGER) --------
+    // -------- PENALTIES --------
     private val photocopyPenalty = 0.60
-    private val censorPenaltyMax = 0.85   // up to -85% for censor bars
-    private val occlusionPenaltyMax = 0.45 // up to -45% for occlusion
-    private val censorKnee = 0.06         // 6% censored area ⇒ full penalty
-    private val occlusionKnee = 0.30      // 30% occluded area ⇒ full penalty
-    private val hardCensorReject = 0.10   // ≥10% censored ⇒ reject_censored
+    private val censorPenaltyMax = 0.85
+    private val occlusionPenaltyMax = 0.45
+    private val censorKnee = 0.06
+    private val occlusionKnee = 0.30
+    private val hardCensorReject = 0.10
 
     // -------- NORMALISATION BANDS --------
     private val bandSharpMin = 2.0
@@ -64,9 +77,38 @@ class ImageAnalyzer {
     private val bandColorMin = 0.02
     private val bandColorMax = 0.35
 
+    // -------- OCR TUNING --------
+    private val ocrTimeoutMs = 12000L
+    private val ocrTimeoutPenaltyScale = 0.25
+    private val ocrAutoRejectOnWeakVisual = true
+    private val ocrWeakTextDensityThresh = 0.16
+    private val ocrWeakEdgeFracThresh = 0.06
+
     fun analyze(src: Bitmap): AnalysisResult {
         val bmp = src.safeDownscale(1400)
 
+        // ---------- OCR GATE ----------
+        val ocr = runOcrGate(bmp)
+        if (ocr.outcome == "no_keywords") {
+            return AnalysisResult(
+                finalScore = 0.0,
+                label = "reject_non_ktp",
+                docLabel = "not_ktp",
+                coloredFraction = 0.0,
+                sharpnessVlap = 0.0,
+                edgeDensity = 0.0,
+                rmsContrast = 0.0,
+                textDensity = 0.0,
+                censorAreaFrac = 0.0,
+                occlusionFrac = 0.0,
+                ocrOutcome = ocr.outcome,
+                ocrHasKeywords = false,
+                ocrTextChars = ocr.textLen,
+                ocrSample = ocr.sample
+            )
+        }
+
+        // ---------- Visual features ----------
         val (gray, satFrac) = toGrayAndSaturationFraction(bmp)
         val vlap = varianceOfLaplacian(gray)
         val (edges, edgeFrac) = sobelEdgeFraction(gray, edgeThreshold)
@@ -87,7 +129,7 @@ class ImageAnalyzer {
             else -> "grayscale_document"
         }
 
-        // Early rejects
+        // Visual early rejects
         if (!likelyKTP) {
             return AnalysisResult(
                 finalScore = 0.0,
@@ -99,7 +141,11 @@ class ImageAnalyzer {
                 rmsContrast = contrast,
                 textDensity = textDens,
                 censorAreaFrac = censorFrac,
-                occlusionFrac = occlFrac
+                occlusionFrac = occlFrac,
+                ocrOutcome = ocr.outcome,
+                ocrHasKeywords = ocr.hasKeywords,
+                ocrTextChars = ocr.textLen,
+                ocrSample = ocr.sample
             )
         }
         if (censorFrac >= hardCensorReject) {
@@ -113,18 +159,21 @@ class ImageAnalyzer {
                 rmsContrast = contrast,
                 textDensity = textDens,
                 censorAreaFrac = censorFrac,
-                occlusionFrac = occlFrac
+                occlusionFrac = occlFrac,
+                ocrOutcome = ocr.outcome,
+                ocrHasKeywords = ocr.hasKeywords,
+                ocrTextChars = ocr.textLen,
+                ocrSample = ocr.sample
             )
         }
 
-        // Normalise
+        // ---------- Scoring ----------
         val nSharp = normalizeLog(vlap, bandSharpMin, bandSharpMax)
         val nEdge  = normalize(edgeFrac, bandEdgeMin, bandEdgeMax)
         val nContr = normalize(contrast, bandContrMin, bandContrMax)
         val nText  = normalize(textDens, bandTextMin, bandTextMax)
         val nColor = normalize(satFrac, bandColorMin, bandColorMax)
 
-        // Base score
         var score = 100.0 * (
                 wColorDoc    * nColor +
                         wSharpness   * nSharp +
@@ -136,15 +185,38 @@ class ImageAnalyzer {
         if (docType != "color_document") score *= photocopyPenalty
 
         // Penalties
-        // CENSOR: linear heavy penalty; full at 6%
         val cf = (censorFrac / censorKnee).coerceIn(0.0, 1.0)
         val censorScale = 1.0 - censorPenaltyMax * cf
-        // OCCLUSION: squared ramp; full at 30%
         val of = (occlFrac / occlusionKnee).coerceIn(0.0, 1.0)
         val occlScale   = 1.0 - occlusionPenaltyMax * of.pow(2.0)
-
         score *= censorScale
         score *= occlScale
+
+        // OCR timeout handling / extra punishment
+        if (ocr.outcome == "timeout_or_error") {
+            score *= ocrTimeoutPenaltyScale
+            if (ocrAutoRejectOnWeakVisual &&
+                (nText < normalize(ocrWeakTextDensityThresh, bandTextMin, bandTextMax) ||
+                        edgeFrac < ocrWeakEdgeFracThresh)
+            ) {
+                return AnalysisResult(
+                    finalScore = 0.0,
+                    label = "reject_non_ktp_ocr_timeout",
+                    docLabel = docType,
+                    coloredFraction = satFrac,
+                    sharpnessVlap = vlap,
+                    edgeDensity = edgeFrac,
+                    rmsContrast = contrast,
+                    textDensity = textDens,
+                    censorAreaFrac = censorFrac,
+                    occlusionFrac = occlFrac,
+                    ocrOutcome = ocr.outcome,
+                    ocrHasKeywords = false,
+                    ocrTextChars = ocr.textLen,
+                    ocrSample = ocr.sample
+                )
+            }
+        }
 
         val label = when {
             score >= 80 -> "good"
@@ -163,12 +235,108 @@ class ImageAnalyzer {
             rmsContrast = contrast,
             textDensity = textDens,
             censorAreaFrac = censorFrac,
-            occlusionFrac = occlFrac
+            occlusionFrac = occlFrac,
+            ocrOutcome = ocr.outcome,
+            ocrHasKeywords = ocr.hasKeywords,
+            ocrTextChars = ocr.textLen,
+            ocrSample = ocr.sample
         )
     }
 
-    // ---------- metrics ----------
+    // ---------- OCR ----------
+    private data class OcrDiag(
+        val outcome: String,   // "found_keywords" | "no_keywords" | "timeout_or_error"
+        val hasKeywords: Boolean,
+        val textLen: Int,
+        val sample: String,
+    )
 
+    private fun runOcrGate(bmp: Bitmap): OcrDiag {
+        return try {
+            val image = InputImage.fromBitmap(bmp, 0)
+            val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+
+            // Trigger processing (this will also trigger model download on first run)
+            val result = Tasks.await(recognizer.process(image), ocrTimeoutMs, TimeUnit.MILLISECONDS)
+
+            val raw = result.text ?: ""
+            android.util.Log.d("OCR", "Raw OCR length: ${raw.length}, text: $raw")
+
+            val text = normalizeOcr(raw)
+            val found = detectKeywords(text)
+            val has = found.isNotEmpty()
+            val sample = text.take(120)
+
+            if (has) OcrDiag("found_keywords", true, text.length, sample)
+            else     OcrDiag("no_keywords", false, text.length, sample)
+
+        } catch (e: Exception) {
+            // Distinguish first-run / model-download issues from other errors
+            if (e is MlKitException) {
+                // Common cases: LIBRARY_LOAD_FAILED, REMOTE_MODEL_NOT_DOWNLOADED (14)
+                android.util.Log.e("OCR", "MlKitException(code=${e.errorCode}): ${e.message}")
+                return OcrDiag("model_downloading", false, 0, "")
+            } else {
+                android.util.Log.e("OCR", "OCR error: ${e.message}", e)
+                return OcrDiag("timeout_or_error", false, 0, "")
+            }
+        }
+    }
+
+    private fun normalizeOcr(s: String): String {
+        var x = s.uppercase()
+        x = x.replace('0','O')
+            .replace('1','I')
+            .replace('5','S')
+            .replace('6','G')
+            .replace('8','B')
+            .replace('4','A')
+            .replace('|','I')
+        return x
+    }
+
+    private fun detectKeywords(text: String, threshold: Double = 0.78): Map<String, Double> {
+        val canon = listOf("NIK","NAMA","ALAMAT")
+        val tokens = text.split(Regex("\\s+")).filter { it.isNotBlank() }
+        val found = mutableMapOf<String,Double>()
+
+        for (kw in canon) {
+            if (text.contains(kw)) {
+                found[kw] = 1.0
+                continue
+            }
+            var best = 0.0
+            for (w in tokens) {
+                val score = similarity(kw, w)
+                if (score > best) best = score
+            }
+            if (best >= threshold) {
+                found[kw] = best
+            }
+        }
+        return found
+    }
+
+    private fun similarity(a: String, b: String): Double {
+        if (a == b) return 1.0
+        val la = a.length; val lb = b.length
+        if (la == 0 || lb == 0) return 0.0
+        val dp = IntArray(lb+1) { it }
+        for (i in 1..la) {
+            var prev = dp[0]
+            dp[0] = i
+            for (j in 1..lb) {
+                val temp = dp[j]
+                val cost = if (a[i-1]==b[j-1]) 0 else 1
+                dp[j] = minOf(dp[j]+1, dp[j-1]+1, prev+cost)
+                prev = temp
+            }
+        }
+        val dist = dp[lb]
+        return 1.0 - (dist.toDouble()/minOf(la,lb).toDouble())
+    }
+
+    // ---------- metrics & heuristics ----------
     private fun toGrayAndSaturationFraction(bmp: Bitmap): Pair<Array<DoubleArray>, Double> {
         val w = bmp.width; val h = bmp.height
         val gray = Array(h) { DoubleArray(w) }
@@ -247,8 +415,6 @@ class ImageAnalyzer {
         return textLike.toDouble()/max(1, tot).toDouble()
     }
 
-    // ---------- ktp heuristics ----------
-
     private fun blueBackgroundFraction(bmp: Bitmap): Double {
         val w = bmp.width; val h = bmp.height
         val pixels = IntArray(w*h); bmp.getPixels(pixels, 0, w, 0, 0, w, h)
@@ -256,7 +422,8 @@ class ImageAnalyzer {
         for (c in pixels) {
             val r = Color.red(c)/255.0; val g = Color.green(c)/255.0; val b = Color.blue(c)/255.0
             val maxc = max(r, max(g, b)); val minc = min(r, min(g, b))
-            val v = maxc; val s = if (v==0.0) 0.0 else (v-minc)/v
+            val v = maxc
+            val s = if (v==0.0) 0.0 else (v-minc)/v
             val hue = hueDeg(r,g,b,maxc,minc)
             if (s > 0.15 && hue in ktpBlueHueMin..ktpBlueHueMax) blue++
         }
@@ -288,8 +455,6 @@ class ImageAnalyzer {
         val portraitHelp = portraitRightScore >= ktpPortraitRightBias
         return aspectOk && textOk && (bgOk || portraitHelp)
     }
-
-    // ---------- penalties ----------
 
     private fun censorAreaFraction(bmp: Bitmap, gray: Array<DoubleArray>): Double {
         val w = bmp.width; val h = bmp.height
@@ -331,7 +496,6 @@ class ImageAnalyzer {
     }
 
     // ---------- utils ----------
-
     private fun normalize(value: Double, lo: Double, hi: Double): Double =
         ((value - lo) / (hi - lo)).coerceIn(0.0, 1.0)
 
@@ -351,7 +515,7 @@ class ImageAnalyzer {
     }
 }
 
-// Bitmap helper
+// ---------- Bitmap helper ----------
 fun Bitmap.safeDownscale(maxDim: Int): Bitmap {
     val larger = max(this.width, this.height)
     if (larger <= maxDim) return this

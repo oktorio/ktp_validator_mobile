@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.vandemonium.ktpvalidator.app-mergeDebugResources-34:/values-v26/values-v26.xml",
+            "outputFile": "com.vandemonium.ktpvalidator.app-mergeDebugResources-36:/values-v26/values-v26.xml",
             "map": [
                 {
                     "source": "C:\\Users\\oktor\\.gradle\\caches\\8.12\\transforms\\7163ec77184d8d7319d212f1475b585c\\transformed\\appcompat-1.7.0\\res\\values-v26\\values-v26.xml",

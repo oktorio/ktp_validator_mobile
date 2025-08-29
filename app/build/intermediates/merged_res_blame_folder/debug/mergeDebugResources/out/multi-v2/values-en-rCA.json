@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.vandemonium.ktpvalidator.app-mergeDebugResources-34:/values-en-rCA/values-en-rCA.xml",
+            "outputFile": "com.vandemonium.ktpvalidator.app-mergeDebugResources-36:/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
                     "source": "C:\\Users\\oktor\\.gradle\\caches\\8.12\\transforms\\21da1ddbfc33ac73cb0b1bbc355d89f3\\transformed\\core-1.13.1\\res\\values-en-rCA\\values-en-rCA.xml",
