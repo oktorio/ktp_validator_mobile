@@ -1,0 +1,3 @@
+com.vandemonium.ktpvalidator.test
+style WhiteBackgroundDialogTheme
+style WhiteBackgroundTheme
