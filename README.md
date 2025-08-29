@@ -1,7 +1,7 @@
 # 📱 KTP Validator – Mobile Version
 
 Mobile application for **KTP validation and scoring**, built to complement the [KTP Validator backend](https://github.com/oktorio/ktp_validator).  
-This version allows users to **capture or upload ID card images**, process them with AI models, and display a **Final Score (0–100)** for quality and authenticity.
+This version allows users to **capture or upload ID card images**, and display a **Final Score (0–100)** for quality and authenticity.
 
 ---
 
